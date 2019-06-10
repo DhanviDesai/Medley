@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Party Play</string>
+    <string name="base_url">https://api.spotify.com/v1/search?</string>
+    <string name="UUID">1da31ef5-00e9-40b7-bf72-7d257f131083</string>
+    <string name="available_players">Available Players</string>
+
+    <string-array name="quotes">
+        <item>\"If I were not a physicist, I would probably be a musician. I often think in music. I live my daydreams in music. I see my life in terms of music\"</item>
+        <item>\"Who hears music, feels his solitude Peopled at once.\"</item>
+        <item>\"Live your truth. Express your love. Share your enthusiasm. Take action towards your dreams. Walk your talk. Dance and sing to your music. Embrace your blessings. Make today worth remembering\"</item>
+        <item>\"Information is not knowledge. Knowledge is not wisdom. Wisdom is not truth. Truth is not beauty. Beauty is not love. Love is not music. Music is THE BEST\"</item>
+        <item>\"Music makes one feel so romantic – at least it always gets on one’s nerves – which is the same thing nowadays\"</item>
+        <item>\"Music is the strongest form of magic.\"</item>
+        <item>\"Music in the soul can be heard by the universe\"</item>
+        <item>\"My personal hobbies are reading, listening to music, and silence.\"</item>
+        <item>\"Music is everybody’s business. It’s only the publishers who think people own it\"</item>
+        <item>\"People ask me how I make music. I tell them I just step into it. It’s like stepping into a river and joining the flow. Every moment in the river has its song\"</item>
+        <item>\"Music touches us emotionally, where words alone can’t.\"</item>
+    </string-array>
+
+    <string-array name="people">
+        <item>― Albert Einstein</item>
+        <item>― Robert Browning</item>
+        <item>― Steve Maraboli</item>
+        <item>― Frank Zappa</item>
+        <item>― Oscar Wilde</item>
+        <item>― Marilyn Manson</item>
+        <item>― Lao Tzu</item>
+        <item>― Edith Sitwell</item>
+        <item>― John Lennon</item>
+        <item>― Michael Jackson</item>
+        <item>― Johnny Depp</item>
+    </string-array>
+</resources>

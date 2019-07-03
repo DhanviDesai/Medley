@@ -77,18 +77,9 @@ public class AddMusic extends AppCompatActivity implements DeviceAdapter.ItemCli
     CardView cardView;
     RecyclerView DeviceRecycler;
     static ArrayList<BluetoothDevice> details;
-    ImageView greyAdd;
-    TextView instruction,addSongs;
-    DeviceAdapter adapter;
-    AddedAdapter addedAdapter;
-    LinearLayout transitLayout;
     ArrayList<String> addedSongs;
-    RecyclerView added;
     private String token;
     ArrayList<TrackDetails> trackDetails;
-    TextView playerIndicator;
-    FloatingActionButton addPlayer;
-    CardView cardView1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,37 +87,12 @@ public class AddMusic extends AppCompatActivity implements DeviceAdapter.ItemCli
         setContentView(R.layout.activity_add_music);
 
 
-        Toolbar tl = findViewById(R.id.toolbarAddMusic);
-        tl.setTitle("");
-        tl.setSubtitle("");
-        setSupportActionBar(tl);
-
-        playerTag = findViewById(R.id.playerTag);
-        cardView = findViewById(R.id.cardView);
-        playerName = findViewById(R.id.playerName);
-        DeviceRecycler = findViewById(R.id.cardRecycler);
-        greyAdd = findViewById(R.id.greyAdd);
-        instruction = findViewById(R.id.instruction);
-        cardView1 = findViewById(R.id.holdingCards);
         details = new ArrayList<>();
-        addSongs = findViewById(R.id.textView2);
-        addPlayer = findViewById(R.id.addPlayer);
-        maskView = findViewById(R.id.maskView);
         MY_UUID = UUID.fromString(getResources().getString(R.string.UUID));
         layoutMain = findViewById(R.id.layoutMain);
         addedSongs= new ArrayList<>();
-        added = findViewById(R.id.recyclerView);
-        playerIndicator = findViewById(R.id.playerIndicator);
         trackDetails= new ArrayList<>();
-        transitLayout = findViewById(R.id.transitLayout);
 
-        adapter = new DeviceAdapter(this,details);
-        adapter.setmItemClickListener(this);
-        DeviceRecycler.setLayoutManager(new LinearLayoutManager(this));
-        DeviceRecycler.setAdapter(adapter);
-        addedAdapter = new AddedAdapter(this,trackDetails);
-        added.setAdapter(addedAdapter);
-        added.setLayoutManager(new LinearLayoutManager(this));
 
         Intent i;
         i = getIntent();
@@ -134,7 +100,7 @@ public class AddMusic extends AppCompatActivity implements DeviceAdapter.ItemCli
             Toast.makeText(this, i.getSerializableExtra("SelectedSong").toString(), Toast.LENGTH_SHORT).show();
         }
 
-        toggleVisibility(name==null,addedSongs == null);
+        //toggleVisibility(name==null,addedSongs == null);
 
 
         AuthenticationRequest.Builder builder =
@@ -151,10 +117,9 @@ public class AddMusic extends AppCompatActivity implements DeviceAdapter.ItemCli
 
         onBluetooth();
 
-        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        registerReceiver(receiver, filter);
+   //     IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+  //      registerReceiver(receiver, filter);
 
-        IntentFilter filter1 = new IntentFilter(BluetoothDevice.ACTION_PAIRING_REQUEST);
 //        registerReceiver(pairingReceiver,filter1);
 
 //        cardView.post(new Runnable() {
@@ -215,7 +180,7 @@ public class AddMusic extends AppCompatActivity implements DeviceAdapter.ItemCli
                 String deviceName = device.getName();
                 String deviceHardwareAddress = device.getAddress(); // MAC address
                 details.add(device);
-                adapter.notifyDataSetChanged();
+                //adapter.notifyDataSetChanged();
                 //Toast.makeText(context, deviceName, Toast.LENGTH_SHORT).show();
 
             }
@@ -373,7 +338,7 @@ public class AddMusic extends AppCompatActivity implements DeviceAdapter.ItemCli
         //cardView.setVisibility(View.GONE);
         BluetoothDevice device = details.get(i);
         name = device.getName();
-        toggleVisibility(name==null,addedSongs==null);
+        //toggleVisibility(name==null,addedSongs==null);
         ConnectThread thread = new ConnectThread(device);
         thread.run();
 
@@ -383,13 +348,13 @@ public class AddMusic extends AppCompatActivity implements DeviceAdapter.ItemCli
 
     private void gotSong(TrackDetails track){
 
-        toggleVisibility(name==null,addedSongs == null);
+       // toggleVisibility(name==null,addedSongs == null);
         trackDetails.add(track);
-        addedAdapter.notifyDataSetChanged();
+        //addedAdapter.notifyDataSetChanged();
 
     }
 
-    @SuppressLint("RestrictedApi")
+ /*   @SuppressLint("RestrictedApi")
     private void toggleVisibility(boolean condition, boolean songs){
 
         if(name==null && addedSongs.size()>0){
@@ -414,7 +379,7 @@ public class AddMusic extends AppCompatActivity implements DeviceAdapter.ItemCli
             cardView1.setVisibility(View.VISIBLE);
         }
 
-    }
+    }*/
 
     private void onBluetooth(){
         if (bluetoothAdapter != null) {
@@ -460,13 +425,12 @@ public class AddMusic extends AppCompatActivity implements DeviceAdapter.ItemCli
 
 
     public void searchSongs(View view) {
-        LinearLayout transit = findViewById(R.id.transitLayout);
 
 
         Intent i = new Intent(this,SearchActivity.class);
         i.putExtra("Token",token);
-        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,transit,"transitLayout");
-        startActivityForResult(i,MY_ACTIVITY,options.toBundle());
+       // ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this,transit,"transitLayout");
+       // startActivityForResult(i,MY_ACTIVITY,options.toBundle());
 
     }
 

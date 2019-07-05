@@ -79,6 +79,8 @@ public class AddMusic extends AppCompatActivity implements DeviceAdapter.ItemCli
     static ArrayList<BluetoothDevice> details;
     ArrayList<String> addedSongs;
     private String token;
+    DeviceAdapter adapter;
+    CardView deviceCardView;
     ArrayList<TrackDetails> trackDetails;
 
     @Override
@@ -90,8 +92,15 @@ public class AddMusic extends AppCompatActivity implements DeviceAdapter.ItemCli
         details = new ArrayList<>();
         MY_UUID = UUID.fromString(getResources().getString(R.string.UUID));
         layoutMain = findViewById(R.id.layoutMain);
+        maskView = findViewById(R.id.maskView);
+        deviceCardView = findViewById(R.id.deviceCardView);
         addedSongs= new ArrayList<>();
+        DeviceRecycler = findViewById(R.id.deviceRecyclerView);
         trackDetails= new ArrayList<>();
+        adapter = new DeviceAdapter(this,details);
+        adapter.setmItemClickListener(this);
+        DeviceRecycler.setLayoutManager(new LinearLayoutManager(this));
+        DeviceRecycler.setAdapter(adapter);
 
 
         Intent i;
@@ -117,8 +126,10 @@ public class AddMusic extends AppCompatActivity implements DeviceAdapter.ItemCli
 
         onBluetooth();
 
-   //     IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-  //      registerReceiver(receiver, filter);
+
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(receiver, filter);
+
 
 //        registerReceiver(pairingReceiver,filter1);
 
@@ -180,8 +191,8 @@ public class AddMusic extends AppCompatActivity implements DeviceAdapter.ItemCli
                 String deviceName = device.getName();
                 String deviceHardwareAddress = device.getAddress(); // MAC address
                 details.add(device);
-                //adapter.notifyDataSetChanged();
-                //Toast.makeText(context, deviceName, Toast.LENGTH_SHORT).show();
+                adapter.notifyDataSetChanged();
+                Toast.makeText(context, deviceName, Toast.LENGTH_SHORT).show();
 
             }
         }
@@ -243,6 +254,12 @@ public class AddMusic extends AppCompatActivity implements DeviceAdapter.ItemCli
         }
     }
 
+    public void clickedPlayerAdd(View view) {
+        maskView.setVisibility(View.VISIBLE);
+        deviceCardView.setVisibility(View.VISIBLE);
+        bluetoothAdapter.startDiscovery();
+
+    }
 
 
     public class ConnectThread extends  Thread {
@@ -303,44 +320,9 @@ public class AddMusic extends AppCompatActivity implements DeviceAdapter.ItemCli
     public void onItemClick(int i) {
         bluetoothAdapter.cancelDiscovery();
         //unregisterReceiver(receiver);
-        int x = cardView.getWidth()/2;
-        int y = cardView.getHeight()/2;
-        int endRadius = 0;
-        int startRadius = (int) Math.hypot(layoutMain.getWidth(), layoutMain.getHeight());
-
-        Animator anim = ViewAnimationUtils.createCircularReveal(cardView, x, y, startRadius, endRadius);
-        anim.addListener(new Animator.AnimatorListener() {
-
-            @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-
-                maskView.setVisibility(View.GONE);
-                cardView.setVisibility(View.GONE);
-
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });
-        anim.start();
-        //cardView.setVisibility(View.GONE);
-        BluetoothDevice device = details.get(i);
-        name = device.getName();
-        //toggleVisibility(name==null,addedSongs==null);
-        ConnectThread thread = new ConnectThread(device);
-        thread.run();
+        deviceCardView.setVisibility(View.GONE);
+        maskView.setVisibility(View.GONE);
+        Toast.makeText(this, "The device is "+details.get(i).getName(), Toast.LENGTH_SHORT).show();
 
 
     }
